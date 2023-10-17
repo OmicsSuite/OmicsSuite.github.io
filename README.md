@@ -13,6 +13,8 @@
 
 **OmicsSuite Website: _https://omicssuite.github.io_**
 
+**OmicsSuite Website (faster): _https://omicssuite.onrender.com_**
+
 **OmicsSuite Courses: _https://space.bilibili.com/34105515_**
 
 **OmicsSuite Download1 (GithubRelease): _https://github.com/OmicsSuite/OmicsSuite.github.io/releases/download/v1.3.9/OmicsSuite-v1.3.9.exe_**
