@@ -17,11 +17,11 @@
 
 **OmicsSuite Courses: _https://space.bilibili.com/34105515_**
 
-**OmicsSuite Download1 (GithubRelease): _https://github.com/OmicsSuite/OmicsSuite.github.io/releases/download/v1.3.9/OmicsSuite-v1.3.9.exe_**
+**OmicsSuite Download1 (GithubRelease`Global`): _https://github.com/OmicsSuite/OmicsSuite.github.io/releases/download/v1.3.9/OmicsSuite-v1.3.9.exe_**
 
-**OmicsSuite Download2 (SourceForge): _https://sourceforge.net/projects/omicssuite-github-io/files/latest/download_**
+**OmicsSuite Download2 (SourceForge`Global`): _https://sourceforge.net/projects/omicssuite-github-io/files/latest/download_**
 
-**OmicsSuite Download3 (AliyunDrive): _https://www.aliyundrive.com/s/Defuhf7FVGw_**
+**OmicsSuite Download3 (AliyunDrive`中国推荐`): _https://www.aliyundrive.com/s/Defuhf7FVGw_**
 
 ### 4. Update History
 **OmicsSuite Update History: _https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzI4OTEwNzI5NA==&action=getalbum&album_id=2601226535738277888#wechat_redirect_**
