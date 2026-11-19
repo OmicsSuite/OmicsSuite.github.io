@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+  <defs>
+    <linearGradient id="clinical-card" x1="4" y1="2" x2="19" y2="22" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff" stop-opacity=".98"/>
+      <stop offset=".42" stop-color="currentColor" stop-opacity=".54"/>
+      <stop offset="1" stop-color="currentColor" stop-opacity=".82"/>
+    </linearGradient>
+    <linearGradient id="clinical-heart" x1="10" y1="8" x2="19" y2="18" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff" stop-opacity=".98"/>
+      <stop offset=".5" stop-color="currentColor" stop-opacity=".76"/>
+      <stop offset="1" stop-color="currentColor"/>
+    </linearGradient>
+    <linearGradient id="clinical-shine" x1="5" y1="3" x2="12" y2="15" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff" stop-opacity=".96"/>
+      <stop offset="1" stop-color="#fff" stop-opacity=".08"/>
+    </linearGradient>
+  </defs>
+  <!-- Patient record sheet with a prominent heart as the clinical mark. -->
+  <path d="M6.3 2.8h8.1l4.6 4.55v12.3c0 .86-.69 1.55-1.55 1.55H6.3c-.86 0-1.55-.69-1.55-1.55V4.35c0-.86.69-1.55 1.55-1.55Z" fill="url(#clinical-card)" stroke="currentColor" stroke-opacity=".9" stroke-width=".9" stroke-linejoin="round"/>
+  <path d="M14.35 2.95v3.3c0 .74.6 1.34 1.34 1.34h3.15" stroke="url(#clinical-shine)" stroke-width=".7" stroke-linejoin="round"/>
+  <path d="M7.1 4.7h4.55M7.1 6.15h3.1" stroke="#fff" stroke-opacity=".88" stroke-width=".52" stroke-linecap="round"/>
+  <path d="M8.05 12.15h1.72l1.05-2.12 1.7 4.35 1.35-2.52h2.06" stroke="url(#clinical-shine)" stroke-width=".85" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M12.55 17.98c-1.72-1.12-3.37-2.46-3.37-4.13 0-1.73 2.1-2.27 3.37-.86 1.27-1.41 3.37-.87 3.37.86 0 1.67-1.65 3.01-3.37 4.13Z" fill="url(#clinical-heart)" stroke="#fff" stroke-opacity=".95" stroke-width=".62" stroke-linejoin="round"/>
+  <path d="M10.35 13.55c.3-.38.83-.4 1.2-.05" stroke="#fff" stroke-opacity=".92" stroke-width=".46" stroke-linecap="round"/>
+  <circle cx="7.2" cy="9.2" r=".45" fill="#fff" fill-opacity=".9"/>
+</svg>

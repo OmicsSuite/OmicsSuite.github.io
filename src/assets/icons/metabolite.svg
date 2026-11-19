@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+  <defs>
+    <linearGradient id="metabolite-ring" x1="5" y1="3" x2="19" y2="21" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff" stop-opacity=".98"/>
+      <stop offset=".24" stop-color="currentColor" stop-opacity=".88"/>
+      <stop offset=".72" stop-color="currentColor" stop-opacity=".64"/>
+      <stop offset="1" stop-color="#fff" stop-opacity=".9"/>
+    </linearGradient>
+    <linearGradient id="metabolite-atom" x1="7" y1="3" x2="18" y2="19" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff" stop-opacity=".98"/>
+      <stop offset=".45" stop-color="currentColor" stop-opacity=".82"/>
+      <stop offset="1" stop-color="currentColor"/>
+    </linearGradient>
+  </defs>
+  <!-- Aromatic benzene ring is the dominant metabolite motif. -->
+  <path d="m12 4.1 6.82 3.94v7.88L12 19.86l-6.82-3.94V8.04L12 4.1Z" fill="currentColor" fill-opacity=".12" stroke="currentColor" stroke-opacity=".28" stroke-width="3.1" stroke-linejoin="round"/>
+  <path d="m12 4.1 6.82 3.94v7.88L12 19.86l-6.82-3.94V8.04L12 4.1Z" stroke="url(#metabolite-ring)" stroke-width="1.65" stroke-linejoin="round"/>
+  <!-- Inner aromatic bonds make the phenyl ring clear at toolbar size. -->
+  <path d="m12 6.45 4.78 2.76v5.52L12 17.49l-4.78-2.76V9.21L12 6.45Z" stroke="#fff" stroke-opacity=".88" stroke-width=".7" stroke-linejoin="round"/>
+  <path d="m12 4.1 0-2.1m6.82 5.98 2.05-1.18m0 9.12 1.88 1.08m-10.75 2.86v2.05m-6.82-5.99-1.9 1.1m0-9.04L1.5 6.9" stroke="url(#metabolite-ring)" stroke-width="1.15" stroke-linecap="round"/>
+  <circle cx="12" cy="2" r="1.35" fill="url(#metabolite-atom)" stroke="#fff" stroke-opacity=".92" stroke-width=".45"/>
+  <circle cx="20.87" cy="6.8" r="1.28" fill="url(#metabolite-atom)" stroke="#fff" stroke-opacity=".9" stroke-width=".43"/>
+  <circle cx="22.75" cy="17.54" r="1.18" fill="url(#metabolite-atom)" stroke="#fff" stroke-opacity=".88" stroke-width=".42"/>
+  <circle cx="12" cy="22" r="1.3" fill="url(#metabolite-atom)" stroke="#fff" stroke-opacity=".9" stroke-width=".43"/>
+  <circle cx="3.13" cy="17.1" r="1.18" fill="url(#metabolite-atom)" stroke="#fff" stroke-opacity=".88" stroke-width=".42"/>
+  <circle cx="1.25" cy="6.8" r="1.18" fill="url(#metabolite-atom)" stroke="#fff" stroke-opacity=".88" stroke-width=".42"/>
+  <path d="M8.3 8.7 11 7.13m1.85.27 2.67 1.55m.93 2.05v2.9m-2.05 1.2-2.6 1.5m-1.85-.02-2.6-1.5m-.98-2.1v-2.85" stroke="#fff" stroke-opacity=".55" stroke-width=".45" stroke-linecap="round"/>
+  <circle cx="12.5" cy="7.2" r=".42" fill="#fff" fill-opacity=".98"/>
+  <circle cx="17" cy="10" r=".38" fill="#fff" fill-opacity=".9"/>
+</svg>

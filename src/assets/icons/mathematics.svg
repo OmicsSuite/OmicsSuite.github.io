@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+  <defs>
+    <linearGradient id="calculus-board" x1="3" y1="2" x2="21" y2="22" gradientUnits="userSpaceOnUse">
+      <stop stop-color="currentColor" stop-opacity=".92"/>
+      <stop offset="1" stop-color="currentColor" stop-opacity=".58"/>
+    </linearGradient>
+    <linearGradient id="calculus-chalk" x1="5" y1="4" x2="19" y2="20" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff" stop-opacity=".99"/>
+      <stop offset="1" stop-color="#d8eee2" stop-opacity=".82"/>
+    </linearGradient>
+  </defs>
+  <rect x="2.15" y="2.05" width="19.7" height="19.2" rx="3" fill="url(#calculus-board)" stroke="currentColor" stroke-width="1.05" stroke-opacity=".9"/>
+  <!-- Chalk integral and x-squared differential as the primary calculus formula. -->
+  <path d="M10.1 5.55H7.9c-1.1 0-1.57 1.4-.5 2.04l1.42.86c1.1.67 1.05 1.78.46 2.98l-2.1 4.23c-.63 1.27-.26 2.77 1.05 2.77h1.92M6.55 5.55h4.12m-4.55 12.88h4.3" stroke="url(#calculus-chalk)" stroke-width="1.03" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="m11.35 11.05 3.12 3.7m0-3.7-3.12 3.7" stroke="url(#calculus-chalk)" stroke-width="1.08" stroke-linecap="round"/>
+  <path d="M15.1 9.65c.1-.63.58-1.03 1.17-1.03.64 0 1.08.36 1.08.88 0 .4-.22.67-.75 1.05l-1.47 1.05h2.34m-.45 2.03v3.85m0-2.32c.28-.57.72-.87 1.2-.87.62 0 .9.45.9 1.12v2.07m-.9-2.22 1.14 2.22" stroke="url(#calculus-chalk)" stroke-width=".82" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M5.55 7.15h.1m12.85 9.3h.1" stroke="#fff" stroke-opacity=".65" stroke-width=".55" stroke-linecap="round"/>
+  <path d="M4.6 3.8h5.9" stroke="#fff" stroke-opacity=".38" stroke-width=".58" stroke-linecap="round"/>
+</svg>
