@@ -7,6 +7,7 @@ const router = createRouter({
     { path: '/documents', name: 'documents', component: () => import('./views/DocumentsView.vue') },
     { path: '/download', name: 'download', component: () => import('./views/DownloadView.vue') },
     { path: '/publication', name: 'publication', component: () => import('./views/PublicationView.vue') },
+    { path: '/updates', name: 'updates', component: () => import('./views/UpdatesView.vue') },
     { path: '/:pathMatch(.*)*', redirect: '/' },
   ],
   scrollBehavior(to) {

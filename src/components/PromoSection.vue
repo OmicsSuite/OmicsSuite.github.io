@@ -6,22 +6,20 @@
 
     <div class="promo-grid">
       <figure class="promo-figure promo-main">
-        <el-image :src="`${base}assets/images/promo-brand.jpg`" :alt="c.mainAlt" fit="cover" :preview-src-list="[`${base}assets/images/promo-brand.jpg`]" preview-teleported hide-on-click-modal />
+        <el-image :src="`${base}assets/images/promo-brand.jpg`" :alt="c.mainAlt" fit="cover" lazy :preview-src-list="[`${base}assets/images/promo-brand.jpg`]" preview-teleported hide-on-click-modal />
         <figcaption>{{ c.mainCaption }}</figcaption>
       </figure>
 
       <div class="promo-side">
         <figure class="promo-figure promo-small">
-          <el-image :src="`${base}assets/images/promo-data.jpg`" :alt="c.dataAlt" fit="cover" :preview-src-list="[`${base}assets/images/promo-data.jpg`]" preview-teleported hide-on-click-modal />
+          <el-image :src="`${base}assets/images/promo-data.jpg`" :alt="c.dataAlt" fit="cover" lazy :preview-src-list="[`${base}assets/images/promo-data.jpg`]" preview-teleported hide-on-click-modal />
           <figcaption>{{ c.dataCaption }}</figcaption>
         </figure>
       </div>
     </div>
 
     <figure class="promo-video" v-reveal>
-      <video ref="videoEl" :poster="`${base}assets/media/omicssuite-promo-poster.jpg`" preload="metadata" playsinline loop @click="togglePlay">
-        <source :src="`${base}assets/media/omicssuite-promo.mp4`" type="video/mp4" />
-      </video>
+      <video ref="videoEl" :poster="`${base}assets/media/omicssuite-promo-poster.jpg`" :src="videoRequested ? videoSrc : undefined" preload="none" playsinline loop @click="togglePlay"></video>
       <button v-if="!playing" class="video-overlay" type="button" :aria-label="c.play" @click="togglePlay">
         <span class="play-triangle"></span>
         <span class="video-label">{{ c.play }}</span>
@@ -33,18 +31,33 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, nextTick, ref } from 'vue'
 import GlassIcon from './GlassIcon.vue'
 import { useI18n } from '../i18n.js'
 const { pick } = useI18n()
 const base = import.meta.env.BASE_URL
 const videoEl = ref(null)
 const playing = ref(false)
-function togglePlay() {
-  const el = videoEl.value
-  if (!el) return
-  if (el.paused) { el.play(); playing.value = true }
-  else { el.pause(); playing.value = false }
+const videoRequested = ref(false)
+const loading = ref(false)
+const videoSrc = `${base}assets/media/omicssuite-promo.mp4`
+async function togglePlay() {
+  const current = videoEl.value
+  if (!current || loading.value) return
+  if (!current.paused) { current.pause(); playing.value = false; return }
+  loading.value = true
+  try {
+    videoRequested.value = true
+    await nextTick()
+    const el = videoEl.value
+    if (!el) return
+    await el.play()
+    playing.value = !el.paused
+  } catch {
+    playing.value = false
+  } finally {
+    loading.value = false
+  }
 }
 
 const copy = {

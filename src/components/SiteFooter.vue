@@ -69,7 +69,7 @@ const groups = computed(() => [
     title: t('footer.resources'), icon: 'database', links: [
       { href: links.datasets, icon: 'database', label: t('footer.datasets'), desc: t('footer.datasetsDesc') },
       { href: links.courses, icon: 'play', label: t('footer.courses'), desc: t('footer.coursesDesc') },
-      { href: links.releases, icon: 'release-tag', label: t('footer.updates'), desc: t('footer.updatesDesc') },
+      { to: '/updates', icon: 'release-tag', label: t('footer.updates'), desc: t('footer.updatesDesc') },
     ],
   },
   {

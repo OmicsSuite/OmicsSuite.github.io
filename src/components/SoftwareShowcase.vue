@@ -9,11 +9,11 @@
             <span class="window-title">OmicsSuite · Multi-omics workspace</span>
             <span class="window-version">v2.0.0</span>
           </div>
-          <img class="app-shot" :src="`${base}assets/images/software-home.jpg`" alt="OmicsSuite home: tool catalog on the left, result gallery in the middle, release panel on the right" />
+          <img class="app-shot" :src="`${base}assets/images/software-home.jpg`" loading="eager" fetchpriority="high" decoding="async" alt="OmicsSuite home: tool catalog on the left, result gallery in the middle, release panel on the right" />
         </div>
         <div class="float-panel">
           <div class="float-bar"><GlassIcon name="scatter-plot" :size="14" /><span>ScatterPlot</span><small>live figure</small></div>
-          <img :src="`${base}assets/images/software-scatterplot.jpg`" alt="ScatterPlot subprogram: parameter panel and grouped scatter plot" />
+          <img :src="`${base}assets/images/software-scatterplot.jpg`" loading="lazy" decoding="async" alt="ScatterPlot subprogram: parameter panel and grouped scatter plot" />
         </div>
       </div>
     </div>
@@ -21,7 +21,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { computed, onUnmounted, ref } from 'vue'
 import GlassIcon from './GlassIcon.vue'
 
 const base = import.meta.env.BASE_URL
@@ -33,12 +33,18 @@ const reduced = window.matchMedia('(prefers-reduced-motion: reduce)')
 
 const tiltStyle = computed(() => ({ transform: `perspective(1350px) rotateX(${rx.value * 7}deg) rotateY(${ry.value * 7}deg)` }))
 
+function scheduleLoop() {
+  if (!frame && !reduced.matches) frame = requestAnimationFrame(loop)
+}
 function loop() {
-  rx.value += (targetX - rx.value) * 0.075
-  ry.value += (targetY - ry.value) * 0.075
-  glowX.value += (targetY * 26 - glowX.value) * 0.08
-  glowY.value += (targetX * 22 - glowY.value) * 0.08
-  frame = requestAnimationFrame(loop)
+  frame = 0
+  rx.value += (targetX - rx.value) * 0.16
+  ry.value += (targetY - ry.value) * 0.16
+  glowX.value += (targetY * 26 - glowX.value) * 0.18
+  glowY.value += (targetX * 22 - glowY.value) * 0.18
+  const settling = Math.max(Math.abs(targetX - rx.value), Math.abs(targetY - ry.value), Math.abs(targetY * 26 - glowX.value) / 26, Math.abs(targetX * 22 - glowY.value) / 22)
+  if (settling > 0.001) scheduleLoop()
+  else { rx.value = targetX; ry.value = targetY; glowX.value = targetY * 26; glowY.value = targetX * 22 }
 }
 function onMove(event) {
   if (reduced.matches) return
@@ -46,13 +52,14 @@ function onMove(event) {
   targetY = ((event.clientX - rect.left) / rect.width - 0.5) * 2
   targetX = ((event.clientY - rect.top) / rect.height - 0.5) * 2
   active.value = true
+  scheduleLoop()
 }
 function onLeave() {
   targetX = 0
   targetY = 0
   active.value = false
+  scheduleLoop()
 }
-onMounted(() => { if (!reduced.matches) frame = requestAnimationFrame(loop) })
 onUnmounted(() => cancelAnimationFrame(frame))
 </script>
 

@@ -51,8 +51,8 @@
             </el-select>
           </div>
           <div class="category-chips" role="group" :aria-label="c.filterCategory">
-            <button :class="{ active: activeCategory === 'all' }" @click="activeCategory = 'all'">{{ c.all }}</button>
-            <button v-for="category in applicationCategories" :key="category.id" :class="{ active: activeCategory === category.id }" @click="activeCategory = category.id">{{ pick(category.zh, category.en) }}<span>{{ categoryCount(category.id) }}</span></button>
+            <button :class="{ active: activeCategory === 'all' }" @click="activeCategory = 'all'"><span class="category-option-label"><GlassIcon name="layers" :size="17" />{{ c.all }}</span></button>
+            <button v-for="category in applicationCategories" :key="category.id" :class="{ active: activeCategory === category.id }" @click="activeCategory = category.id"><span class="category-option-label"><GlassIcon :name="categoryIcon(category.id)" :size="17" />{{ pick(category.zh, category.en) }}</span><span class="category-count">{{ categoryCount(category.id) }}</span></button>
           </div>
         </aside>
         <div class="catalog-results">
@@ -61,7 +61,10 @@
         <article v-for="app in pagedApplications" :key="app.id" class="application-card">
           <div class="application-content">
             <div class="application-title-row">
-              <div><span class="application-category">{{ categoryName(app.category) }}</span><h3>{{ app.name }}</h3></div>
+              <div class="application-heading">
+                <span class="application-category"><GlassIcon :name="categoryIcon(app.category)" :size="15" />{{ categoryName(app.category) }}</span>
+                <h3 class="application-name"><GlassIcon :name="applicationIcon(app)" :size="24" />{{ app.name }}</h3>
+              </div>
               <span class="source-badge">{{ app.source }}</span>
             </div>
             <p class="application-description">{{ pick(app.descriptionZh, app.descriptionEn) }}</p>
@@ -114,7 +117,26 @@ const pageSize = 5
 const PrevPageIcon = { name: 'PrevPageIcon', render: () => h(GlassIcon, { name: 'arrow-left', size: 18 }) }
 const NextPageIcon = { name: 'NextPageIcon', render: () => h(GlassIcon, { name: 'arrow-right', size: 18 }) }
 const asset = (name) => `${import.meta.env.BASE_URL}assets/images/${name}`
-const categoryIcon = (id) => ({ sequence: 'sequence', statistics: 'chart-column', algorithm: 'brain-circuit', genomics: 'dna', transcriptomics: 'rna', enrichment: 'enrichment', proteomics: 'protein', metabolomics: 'metabolite', clinical: 'clinical', microorganisms: 'microorganism', singlecell: 'cell', mathematics: 'sparkles', table: 'spreadsheet' }[id] || 'flask-conical')
+const categoryIcon = (id) => ({ sequence: 'sequence', statistics: 'chart-column', algorithm: 'brain-circuit', genomics: 'dna', transcriptomics: 'rna', enrichment: 'enrichment', proteomics: 'protein', metabolomics: 'metabolite', clinical: 'clinical', microorganisms: 'microorganism', singlecell: 'cell', mathematics: 'mathematics', table: 'spreadsheet' }[id] || 'flask-conical')
+const applicationIcon = (app) => {
+  const key = `${app.id} ${app.name} ${app.nameZh}`.toLowerCase()
+  if (/tutorial|quick.?start/.test(key)) return 'book-open'
+  if (/revcom|sequence|fasta|seqs|translate|motif|alignment|\bmsa\b/.test(key)) return 'sequence'
+  if (/tree|phylo|dendro/.test(key)) return 'workflow'
+  if (/volcano|scatter|umap|tsne|pca/.test(key)) return 'scatter-plot'
+  if (/heatmap|matrix/.test(key)) return 'chart-column'
+  if (/correlation|trend|lineplot|linechart/.test(key)) return 'chart-line'
+  if (/cluster|network|wgcna|ppi/.test(key)) return 'network'
+  if (/enrich|kegg|gsea|goanalysis/.test(key)) return 'enrichment'
+  if (/genome|variant|synteny|maf/.test(key)) return 'dna'
+  if (/protein|peptide/.test(key)) return 'protein'
+  if (/metabo|opls|massspect|\bmz\b/.test(key)) return 'metabolite'
+  if (/cell|spatial|trajectory|monocle|marker/.test(key)) return 'cell'
+  if (/survival|\broc\b|clinical|forest/.test(key)) return 'clinical'
+  if (/table|merge|melt|cast|outlier|missing/.test(key)) return 'spreadsheet'
+  if (/image|diagram|editor/.test(key)) return 'image'
+  return categoryIcon(app.category)
+}
 const categoryCount = (id) => applications.filter((app) => app.category === id).length
 const categoryName = (id) => {
   const category = applicationCategories.find((item) => item.id === id)
@@ -160,10 +182,10 @@ const copy = {
   en: {
     eyebrow: 'Documents · From interface to analysis', title: 'Learn one program. Understand the whole workspace.', description: 'Start with ScatterPlot to learn the shared interface, then explore methods by research category. The catalog brings current source descriptions, input/output guidance and real example images together—without {apps} separate pages.', startExample: 'Start with the interface', browseApps: 'Browse application catalog', appCount: 'source program entries', categoryCount: 'research and tool categories', sharedPattern: 'shared interaction pattern', pageNav: 'Documentation navigation', quickstart: 'Quick start', interfaceGuide: 'Interface guide', categoryGuides: 'Category guides', appCatalog: 'Application catalog',
     quickstartKicker: '01 · Quick start', quickstartTitle: 'Validate the workflow before running your own data.', quickstartDescription: 'Most programs share an Input–Options–Run–Output structure. Example files help separate data-format issues from analysis questions.',
-    realInterface: '01 · Current software interface', scatterTitle: 'Read four interface regions through ScatterPlot.', scatterDescription: 'This screenshot comes directly from the current JavaFX source running locally. Other table-based programs follow a similar layout and sequence.', scatterImageAlt: 'Current OmicsSuite ScatterPlot interface', currentSource: 'Current source screenshot · ScatterPlot · software UI',
+    realInterface: '01 · Software interface', scatterTitle: 'Read four interface regions through ScatterPlot.', scatterDescription: 'This screenshot comes directly from the current JavaFX source running locally. Other table-based programs follow a similar layout and sequence.', scatterImageAlt: 'Current OmicsSuite ScatterPlot interface', currentSource: 'Current source screenshot · ScatterPlot · software UI',
     outputLabel: 'Run and download', outputTitle: 'From an example result to a saved figure.', outputDescription: 'Select Submit to start. Progress reports task status and the figure appears in Output. ScatterPlot provides PDF Download and JPEG Download; other programs show their own available formats.', outputPointA: 'PDF preserves vector artwork for later layout.', outputPointB: 'JPEG is convenient for previews, talks and sharing.', outputPointC: 'Check title, axes, groups, dimensions and DPI before export.', outputImageAlt: 'ScatterPlot example output',
     categoryKicker: '03 · Learn by research question', categoryTitle: 'Category guides instead of repeated button instructions.', categoryDescription: 'Understand the data and analytical goal for each category before choosing a program from the catalog.', viewCategory: 'View all programs in this category',
-    catalogKicker: '02 · Complete application catalog', catalogTitle: 'Names, descriptions, input/output and examples on one page.', catalogDescription: 'Filter by category or search names and descriptions. Expand the information panel for guidance and select an image to enlarge it.', results: 'matching programs', searchPlaceholder: 'Search name, function or source file…', filterCategory: 'Filter by category', allCategories: 'All categories', all: 'All', noResults: 'No matching programs. Try a shorter query or another category.', infoPanel: 'Information · Input / output / guidance', input: 'Input', output: 'Output', tip: 'Guidance', exampleImage: 'Program example', clickEnlarge: 'Select to enlarge', imageUnavailable: 'Example image unavailable',
+    catalogKicker: '02 · Application catalog', catalogTitle: 'Names, descriptions, input/output and examples on one page.', catalogDescription: 'Filter by category or search names and descriptions. Expand the information panel for guidance and select an image to enlarge it.', results: 'matching programs', searchPlaceholder: 'Search name, function or source file…', filterCategory: 'Filter by category', allCategories: 'All categories', all: 'All', noResults: 'No matching programs. Try a shorter query or another category.', infoPanel: 'Information · Input / output / guidance', input: 'Input', output: 'Output', tip: 'Guidance', exampleImage: 'Program example', clickEnlarge: 'Select to enlarge', imageUnavailable: 'Example image unavailable',
   },
 }
 const c = computed(() => {
@@ -263,8 +285,11 @@ const guideSteps = (id) => guides[id] || []
 .category-chips button { display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%; padding: 9px 12px; color: var(--muted); background: color-mix(in srgb, var(--surface) 88%, transparent); border: 1px solid transparent; border-radius: 12px; font-size: 13px; font-weight: 650; text-align: left; cursor: pointer; transition: color .35s var(--ease-soft), background .35s var(--ease-soft), border-color .35s var(--ease-soft), transform .35s var(--ease-soft), box-shadow .35s var(--ease-soft); }
 .category-chips button:hover { color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, var(--surface)); border-color: color-mix(in srgb, var(--accent) 26%, transparent); transform: translateX(2px); }
 .category-chips button.active { color: #fff; background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 92%, #ffffff), var(--accent) 55%, color-mix(in srgb, var(--accent) 82%, #001b14)); border-color: color-mix(in srgb, var(--accent) 62%, transparent); box-shadow: 0 10px 20px color-mix(in srgb, var(--accent) 28%, transparent), inset 0 1px 0 #ffffff55; }
-.category-chips button.active span { color: #fff; background: #ffffff2b; }
-.category-chips button span { flex: none; min-width: 22px; padding: 2px 6px; color: var(--muted); background: color-mix(in srgb, var(--surface-2) 80%, var(--accent) 20%); border-radius: 999px; font-size: 11px; font-weight: 650; text-align: center; opacity: .9; }
+.category-chips button.active .category-count { color: #fff; background: #ffffff2b; }
+.category-chips button .category-option-label { display: inline-flex; align-items: center; gap: 9px; min-width: 0; }
+.category-chips button .category-option-label :deep(.glass-icon) { flex: none; opacity: .84; color: currentColor; }
+.catalog-toolbar :deep(.el-input__wrapper:focus-within .glass-icon) { color: var(--accent); transform: translateY(-1px) scale(1.08); }
+.category-chips button .category-count { flex: none; min-width: 22px; padding: 2px 6px; color: var(--muted); background: color-mix(in srgb, var(--surface-2) 80%, var(--accent) 20%); border-radius: 999px; font-size: 11px; font-weight: 650; text-align: center; opacity: .9; }
 .catalog-results { min-width: 0; }
 .category-chips::-webkit-scrollbar { width: 3px; }
 .category-chips::-webkit-scrollbar-track { background: transparent; }
@@ -274,8 +299,14 @@ const guideSteps = (id) => guides[id] || []
 .application-card { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(320px, .85fr); overflow: hidden; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; }
 .application-content { padding: 25px; }
 .application-title-row { display: flex; justify-content: space-between; gap: 14px; align-items: flex-start; }
-.application-category { color: var(--accent); font-size: 12px; font-weight: 700; }
+.application-heading { min-width: 0; }
+.application-category { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); font-size: 12px; font-weight: 700; }
+.application-category :deep(.glass-icon), .application-name :deep(.glass-icon) { color: var(--accent); transition: transform .35s var(--ease-soft), filter .35s var(--ease-soft); }
+.application-card:hover .application-category :deep(.glass-icon) { transform: translateY(-1px) scale(1.08); }
 .application-title-row h3 { margin: 7px 0 2px; font-size: 23px; letter-spacing: -.02em; }
+.application-name { display: flex; align-items: center; gap: 9px; }
+.application-name :deep(.glass-icon) { padding: 5px; box-sizing: content-box; border: 1px solid color-mix(in srgb, var(--accent) 20%, var(--border)); border-radius: 10px; background: color-mix(in srgb, var(--accent) 8%, var(--surface)); }
+.application-card:hover .application-name :deep(.glass-icon) { transform: translateY(-2px) rotate(-5deg) scale(1.06); filter: drop-shadow(0 4px 6px color-mix(in srgb, var(--accent) 24%, transparent)); }
 .application-subtitle { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.55; }
 .source-badge { flex: none; max-width: 150px; overflow: hidden; padding: 5px 8px; color: var(--muted); background: var(--surface-2); border-radius: 6px; font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
 .application-description { display: -webkit-box; overflow: hidden; margin: 17px 0; color: var(--muted); font-size: 13px; line-height: 1.72; -webkit-box-orient: vertical; -webkit-line-clamp: 4; }
@@ -284,11 +315,14 @@ const guideSteps = (id) => guides[id] || []
 .application-details dl { display: grid; gap: 13px; margin: 0; }
 .application-details dl > div { display: grid; grid-template-columns: 80px 1fr; gap: 12px; }
 .application-details dt { display: flex; gap: 6px; align-items: center; color: var(--ink); font-size: 12px; font-weight: 700; }
-.application-details dt svg { color: var(--accent); }
+.application-details dt :deep(.glass-icon) { color: var(--accent); transition: transform .3s var(--ease-soft), filter .3s var(--ease-soft); }
+.application-details dl > div { transition: color .25s var(--ease-soft); }
+.application-details dl > div:hover dt :deep(.glass-icon) { transform: translateY(-2px) rotate(-6deg) scale(1.12); filter: drop-shadow(0 3px 5px color-mix(in srgb, var(--accent) 30%, transparent)); }
 .application-details dd { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.65; }
 .application-figure { display: flex; flex-direction: column; align-items: stretch; justify-content: center; min-width: 0; margin: 0; padding: 18px; background: var(--surface-2); border-left: 1px solid var(--border); perspective: 1100px; }
 .application-figure :deep(.el-image) { flex: 0 0 auto; width: 100%; aspect-ratio: 1.6 / 1; min-height: 0; overflow: hidden; border-radius: 16px; background: #f7f7f4; cursor: zoom-in; box-shadow: var(--shadow-soft); transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transform-style: preserve-3d; transition: transform .22s ease-out, box-shadow .5s var(--ease-soft); }
 .application-figure:hover :deep(.el-image) { transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) scale(1.035); box-shadow: 0 30px 60px color-mix(in srgb, var(--accent) 20%, rgba(18, 52, 41, .16)), 0 10px 24px color-mix(in srgb, var(--accent) 10%, transparent); }
+.application-figure:hover .image-error :deep(.glass-icon) { transform: translateY(-3px) rotate(-5deg) scale(1.08); }
 .application-figure :deep(.el-image__inner) { transform: translateZ(26px) scale(1.02); transition: transform .4s var(--ease-soft); }
 .image-error { display: grid; place-items: center; min-height: 250px; color: var(--muted); }
 .catalog-pagination { justify-content: center; margin-top: 30px; }

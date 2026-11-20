@@ -6,14 +6,14 @@
         <h1>OmicsSuite: a customized and pipelined suite for analysis and visualization of <span class="nowrap">multi-omics</span> big data</h1>
         <p class="journal-line">Horticulture Research · 2023 · uhad195</p>
         <p class="author-line">Ben-ben Miao, Wei Dong, Yi-xin Gu, Zhao-fang Han, Xuan Luo, Cai-huan Ke, Wei-wei You</p>
-        <p class="abstract">{{ c.abstract }}</p>
+        <p class="abstract" v-html="c.abstract"></p>
         <div class="paper-actions">
           <a href="https://doi.org/10.1093/hr/uhad195" target="_blank" rel="noreferrer" class="button button-primary"><GlassIcon name="globe" :size="17" />{{ c.readOnline }}<GlassIcon name="external-link" :size="17" /></a>
           <a :href="pdf" target="_blank" rel="noreferrer" class="button button-secondary"><GlassIcon name="file-text" :size="18" />{{ c.readPdf }}</a>
         </div>
       </div>
       <figure class="paper-visual media-frame" v-reveal>
-        <el-image :src="`${base}assets/images/publication-figure1.jpg`" :alt="c.figureAlt" fit="contain" :preview-src-list="[`${base}assets/images/publication-figure1.jpg`]" preview-teleported hide-on-click-modal />
+        <el-image :src="`${base}assets/images/publication-figure1.jpg`" :alt="c.figureAlt" fit="contain" lazy :preview-src-list="[`${base}assets/images/publication-figure1.jpg`]" preview-teleported hide-on-click-modal />
         <span class="paper-zoom"><GlassIcon name="maximize" :size="14" />{{ c.zoomHint }}</span>
         <figcaption>{{ c.figureCaption }}</figcaption>
       </figure>
@@ -37,7 +37,7 @@
       </header>
       <div class="figure-grid">
         <figure v-for="figure in figures" :key="figure.src" class="figure-card media-frame" v-reveal>
-          <div class="figure-media"><el-image :src="`${base}assets/images/${figure.src}`" :alt="pick(figure.altZh, figure.altEn)" fit="contain" :preview-src-list="[`${base}assets/images/${figure.src}`]" preview-teleported hide-on-click-modal /><span class="zoom-hint"><GlassIcon name="maximize" :size="14" />{{ c.zoomHint }}</span></div>
+          <div class="figure-media"><el-image :src="`${base}assets/images/${figure.src}`" :alt="pick(figure.altZh, figure.altEn)" fit="contain" lazy :preview-src-list="[`${base}assets/images/${figure.src}`]" preview-teleported hide-on-click-modal /><span class="zoom-hint"><GlassIcon name="maximize" :size="14" />{{ c.zoomHint }}</span></div>
           <figcaption>
             <span class="figure-label"><GlassIcon :name="figure.icon" :size="15" />{{ pick(figure.labelZh, figure.labelEn) }}</span>
             <h3>{{ pick(figure.titleZh, figure.titleEn) }}</h3>
@@ -122,7 +122,7 @@ const copy = {
   },
   en: {
     peerReviewed: 'Peer-reviewed · Open Access',
-    abstract: 'OmicsSuite integrates statistics and multi-omics analysis into one desktop suite: at publication it shipped 12 categories and 175 sub-applications spanning sequence, statistics, algorithms, genomics, transcriptomics, enrichment, proteomics, metabolomics, clinical, microorganism, single-cell and table operations, with over 300 adjustable parameter interfaces. It reads FASTA, FastQ, MAF, mzML and HDF5 directly, and produces publication-ready figures and tables.',
+    abstract: 'OmicsSuite integrates <strong>statistics and multi-omics analysis</strong> into one desktop suite: at publication it shipped <strong>12 categories and 175 sub-applications</strong> spanning sequence, statistics, algorithms, genomics, transcriptomics, enrichment, proteomics, metabolomics, clinical, microorganism, single-cell and table operations, with <strong>over 300 adjustable parameter interfaces</strong>. It reads <strong>FASTA, FastQ, MAF, mzML and HDF5</strong> directly, and produces publication-ready figures and tables.',
     readOnline: 'Read the paper online',
     readPdf: 'Open local PDF',
     journal: 'Journal',
@@ -211,7 +211,7 @@ async function copyCitation() {
 
 <style scoped>
 .publication-page { padding-top: 92px; padding-bottom: 80px; }
-.paper-hero { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(360px, .92fr); gap: clamp(34px, 4vw, 64px); align-items: start; }
+.paper-hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(420px, 1fr); gap: clamp(34px, 3.5vw, 54px); align-items: start; }
 .paper-copy { min-width: 0; }
 .peer-badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; color: var(--accent); background: color-mix(in srgb, var(--accent) 9%, var(--surface)); border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--border)); border-radius: 999px; font-size: 12px; font-weight: 700; }
 .paper-copy h1 { margin: 22px 0 18px; font-size: clamp(26px, 2.6vw, 34px); line-height: 1.16; letter-spacing: -.035em; text-wrap: balance; }
@@ -219,6 +219,7 @@ async function copyCitation() {
 .journal-line { margin: 0; color: var(--accent); font-size: 14px; font-weight: 700; }
 .author-line { margin: 12px 0 0; color: var(--muted); font-size: 13px; line-height: 1.8; }
 .abstract { margin: 20px 0 0; color: var(--muted); font-size: 14.5px; line-height: 1.85; }
+.abstract :deep(strong) { color: var(--ink); font-weight: 720; }
 .paper-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
 .paper-visual { width: 100%; margin: 0; padding: 14px; background: var(--surface); border: 1px solid var(--border); }
 .paper-visual :deep(.el-image) { display: block; width: 100%; overflow: hidden; border-radius: 12px; }

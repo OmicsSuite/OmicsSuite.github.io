@@ -9,13 +9,13 @@
         <video
           ref="videoEl"
           :poster="`${base}assets/media/omicssuite-vibe-poster.jpg`"
-          preload="metadata"
+          :src="videoRequested ? videoSrc : undefined"
+          preload="none"
           playsinline
           @click="togglePlay"
           @timeupdate="onTime"
           @ended="playing = false"
         >
-          <source :src="`${base}assets/media/omicssuite-vibe.mp4`" type="video/mp4" />
         </video>
         <button v-if="!playing" class="film-overlay" type="button" :aria-label="c.play" @click="togglePlay">
           <span class="film-play"><i></i></span>
@@ -50,7 +50,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, nextTick, ref } from 'vue'
 import GlassIcon from './GlassIcon.vue'
 import { useI18n } from '../i18n.js'
 
@@ -58,26 +58,69 @@ const base = import.meta.env.BASE_URL
 const { pick } = useI18n()
 const videoEl = ref(null)
 const playing = ref(false)
+const videoRequested = ref(false)
+const loading = ref(false)
 const time = ref(0)
+const videoSrc = `${base}assets/media/omicssuite-vibe.mp4`
 
-function togglePlay() {
-  const el = videoEl.value
-  if (!el) return
-  if (el.paused) {
-    el.play()
-    playing.value = true
-  } else {
-    el.pause()
+async function requestVideo() {
+  videoRequested.value = true
+  await nextTick()
+  return videoEl.value
+}
+
+function waitForMetadata(el) {
+  if (el.readyState >= 1) return Promise.resolve()
+  return new Promise((resolve, reject) => {
+    const cleanup = () => {
+      el.removeEventListener('loadedmetadata', onReady)
+      el.removeEventListener('error', onError)
+    }
+    const onReady = () => { cleanup(); resolve() }
+    const onError = () => { cleanup(); reject(new Error('Video metadata could not be loaded')) }
+    el.addEventListener('loadedmetadata', onReady, { once: true })
+    el.addEventListener('error', onError, { once: true })
+  })
+}
+
+async function togglePlay() {
+  const current = videoEl.value
+  if (!current || loading.value) return
+  if (!current.paused) {
+    current.pause()
     playing.value = false
+    return
+  }
+  loading.value = true
+  try {
+    const el = await requestVideo()
+    if (!el) return
+    await el.play()
+    playing.value = !el.paused
+  } catch {
+    playing.value = false
+  } finally {
+    loading.value = false
   }
 }
 
-function seek(at) {
-  const el = videoEl.value
-  if (!el) return
-  el.currentTime = at
-  el.play()
-  playing.value = true
+async function seek(at) {
+  if (loading.value) return
+  loading.value = true
+  try {
+    const el = await requestVideo()
+    if (!el) return
+    const metadata = waitForMetadata(el)
+    const playback = el.play()
+    await metadata
+    el.currentTime = Math.min(Math.max(0, at), Number.isFinite(el.duration) ? el.duration : at)
+    await playback
+    playing.value = !el.paused
+  } catch {
+    playing.value = false
+  } finally {
+    loading.value = false
+  }
 }
 
 function onTime() {
